@@ -1,29 +1,20 @@
 "use client";
 
-import { registerAction } from "@/actions/auth/register.action";
+import { loginAction } from "@/actions/auth/login.action";
 import { useActionState, useState } from "react";
 import Link from "next/link";
-import { Mail, Lock, ArrowRight, CheckCircle, Eye, EyeOff } from "lucide-react";
+import { Mail, Lock, ArrowRight, Eye, EyeOff } from "lucide-react";
 import { inputClass } from "@/lib/utils/styles";
 import Image from "next/image";
-import PasswordStrength from "@/components/ui/password-strength";
 
 const initialState = { error: "" };
 
-const PERKS = [
-  "Planification d'itinéraire sur carte",
-  "Suivi de budget en temps réel",
-  "Accès gratuit, sans carte bancaire",
-];
-
-export default function RegisterPage() {
+export default function LoginPage() {
   const [state, formAction, isPending] = useActionState(
-    registerAction,
+    loginAction,
     initialState,
   );
-  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
 
   return (
     <div
@@ -33,8 +24,8 @@ export default function RegisterPage() {
       {/* Colonne gauche — photo */}
       <div className="hidden lg:flex lg:w-1/2 relative">
         <Image
-          src="https://images.unsplash.com/photo-1530521954074-e64f6810b32d?w=1200&q=80"
-          alt="Vue aérienne d'une destination de voyage tropicale"
+          src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200&q=80"
+          alt="Voyageur contemplant un paysage montagneux"
           fill
           sizes="50vw"
           className="object-cover"
@@ -42,7 +33,7 @@ export default function RegisterPage() {
         />
         <div className="absolute inset-0 bg-stone-900/50" aria-hidden="true" />
 
-        {/* Logo */}
+        {/* Logo en haut à gauche */}
         <div className="absolute top-10 left-10 z-20">
           <Link href="/" aria-label="WiseTrip — Retour à l'accueil">
             <Image
@@ -56,27 +47,19 @@ export default function RegisterPage() {
           </Link>
         </div>
 
-        {/* Contenu centré */}
+        {/* Citation centrée */}
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-12 text-center">
-          <h2
-            className="text-white text-3xl font-semibold leading-relaxed mb-8"
+          <blockquote
+            className="text-white text-2xl font-semibold leading-relaxed"
             style={{ fontFamily: "var(--font-dm-serif)" }}
           >
-            Votre prochain voyage commence ici
-          </h2>
-          <ul className="space-y-4 w-full max-w-xs" role="list">
-            {PERKS.map((perk) => (
-              <li key={perk} className="flex items-center gap-3">
-                <div className="w-5 h-5 bg-white/20 rounded-full flex items-center justify-center shrink-0">
-                  <CheckCircle size={12} className="text-white" />
-                </div>
-                <span className="text-sm text-white/80 text-left">{perk}</span>
-              </li>
-            ))}
-          </ul>
+            &ldquo;Le voyage est la seule chose qu&apos;on achète qui nous rend
+            plus riche&rdquo;
+          </blockquote>
+          <p className="mt-4 text-sm text-white/50">— Anonyme</p>
         </div>
 
-        {/* Crédit photo */}
+        {/* Crédit photo en bas à gauche */}
         <div className="absolute bottom-6 left-10 z-20">
           <p className="text-xs text-white/30">
             Photo par{" "}
@@ -123,12 +106,12 @@ export default function RegisterPage() {
           className="flex-1 flex items-center justify-center px-6 py-12"
         >
           <div className="w-full max-w-sm">
-            <div className="text-center mb-6">
-              <h1 className="text-2xl font-semibold text-stone-900 tracking-tight mb-1">
-                Créer un compte
+            <div className="text-center mb-8">
+              <h1 className="text-2xl font-semibold text-stone-900 tracking-tight mb-2">
+                Bon retour !
               </h1>
               <p className="text-sm text-stone-400">
-                Gratuit · Aucune carte bancaire requise
+                Connectez-vous pour accéder à vos voyages
               </p>
             </div>
 
@@ -158,6 +141,7 @@ export default function RegisterPage() {
                       placeholder="vous@exemple.com"
                       className={`${inputClass} pl-10`}
                       aria-required="true"
+                      aria-describedby={state.error ? "form-error" : undefined}
                     />
                   </div>
                 </div>
@@ -181,14 +165,11 @@ export default function RegisterPage() {
                       id="password"
                       name="password"
                       type={showPassword ? "text" : "password"}
-                      autoComplete="new-password"
+                      autoComplete="current-password"
                       required
-                      placeholder="Minimum 8 caractères"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="••••••••"
                       className={`${inputClass} pl-10 pr-10`}
                       aria-required="true"
-                      aria-describedby="password-strength"
                     />
                     <button
                       type="button"
@@ -201,47 +182,6 @@ export default function RegisterPage() {
                       }
                     >
                       {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
-                    </button>
-                  </div>
-
-                  {/* Indicateur de force */}
-                  <div id="password-strength">
-                    <PasswordStrength password={password} />
-                  </div>
-                </div>
-
-                {/* Confirmer mot de passe */}
-                <div>
-                  <label
-                    htmlFor="confirm"
-                    className="block text-sm font-medium text-stone-700 mb-1.5"
-                  >
-                    Confirmer le mot de passe
-                  </label>
-                  <div className="relative">
-                    <div
-                      className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400"
-                      aria-hidden="true"
-                    >
-                      <Lock size={15} />
-                    </div>
-                    <input
-                      id="confirm"
-                      name="confirm"
-                      type={showConfirm ? "text" : "password"}
-                      autoComplete="new-password"
-                      required
-                      placeholder="••••••••"
-                      className={`${inputClass} pl-10 pr-10`}
-                      aria-required="true"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowConfirm(!showConfirm)}
-                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 transition-colors"
-                      aria-label={showConfirm ? "Masquer" : "Afficher"}
-                    >
-                      {showConfirm ? <EyeOff size={15} /> : <Eye size={15} />}
                     </button>
                   </div>
                 </div>
@@ -270,30 +210,25 @@ export default function RegisterPage() {
                         className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"
                         aria-hidden="true"
                       />
-                      Création du compte...
+                      Connexion...
                     </>
                   ) : (
                     <>
-                      Créer mon compte
+                      Se connecter
                       <ArrowRight size={14} aria-hidden="true" />
                     </>
                   )}
                 </button>
-
-                <p className="text-xs text-stone-400 text-center">
-                  En créant un compte, vous acceptez nos conditions
-                  d&apos;utilisation.
-                </p>
               </form>
             </div>
 
             <p className="mt-5 text-center text-sm text-stone-400">
-              Déjà un compte ?{" "}
+              Pas encore de compte ?{" "}
               <Link
-                href="/login"
+                href="/register"
                 className="text-[#BC4800] font-medium hover:underline"
               >
-                Se connecter
+                Créer un compte
               </Link>
             </p>
           </div>
