@@ -3,12 +3,18 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+
 type ActionState = { error: string };
 
 const RegisterSchema = z
   .object({
     email: z.email("Email invalide"),
-    password: z.string().min(6, "Minimum 6 caractères"),
+    password: z
+      .string()
+      .min(8, "Minimum 8 caractères")
+      .regex(/[A-Z]/, "Une majuscule requise")
+      .regex(/[0-9]/, "Un chiffre requis")
+      .regex(/[^A-Za-z0-9]/, "Un caractère spécial requis"),
     confirm: z.string(),
   })
   .refine((data) => data.password === data.confirm, {
@@ -38,6 +44,5 @@ export async function registerAction(
   });
 
   if (error) return { error: "Erreur lors de l'inscription" };
-
-  redirect("/dashboard");
+  redirect("/confirm");
 }
