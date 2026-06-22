@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: ["/", "/login", "/register"],
       disallow: ["/dashboard", "/trips", "/profile"],
     },
-    sitemap: "https://wisetrip.vercel.app/sitemap.xml",
+    sitemap: "https://wise-tripfr.vercel.app/sitemap.xml",
   };
 }

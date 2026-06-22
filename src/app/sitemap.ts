@@ -3,19 +3,19 @@ import { MetadataRoute } from "next";
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: "https://wisetrip.vercel.app",
+      url: "https://wise-tripfr.vercel.app/",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 1,
     },
     {
-      url: "https://wisetrip.vercel.app/login",
+      url: "https://wise-tripfr.vercel.app/ogin",
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 0.8,
     },
     {
-      url: "https://wisetrip.vercel.app/register",
+      url: "https://wise-tripfr.vercel.app/",
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 0.8,
