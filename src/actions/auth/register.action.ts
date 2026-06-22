@@ -44,5 +44,5 @@ export async function registerAction(
   });
 
   if (error) return { error: "Erreur lors de l'inscription" };
-  redirect("/confirm");
+  redirect("/dashboard");
 }
