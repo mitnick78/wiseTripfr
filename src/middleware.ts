@@ -11,7 +11,15 @@ export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
   // Pages publiques — pas de redirection
-  const publicPaths = ["/", "/login", "/register"];
+  const publicPaths = [
+    "/",
+    "/login",
+    "/register",
+    "/forgot-password",
+    "/auth/reset",
+    "/auth/callback",
+    "/confirm",
+  ];
   if (publicPaths.includes(pathname)) {
     // Si déjà connecté et sur login/register → dashboard
     if (user && (pathname === "/login" || pathname === "/register")) {

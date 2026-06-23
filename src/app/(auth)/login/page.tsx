@@ -171,6 +171,15 @@ export default function LoginPage() {
                       className={`${inputClass} pl-10 pr-10`}
                       aria-required="true"
                     />
+                    <div className="flex justify-end">
+                      <Link
+                        href="/forgot-password"
+                        className="text-xs text-stone-400 hover:text-[#BC4800] transition-colors"
+                      >
+                        Mot de passe oublié ?
+                      </Link>
+                    </div>
+
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
