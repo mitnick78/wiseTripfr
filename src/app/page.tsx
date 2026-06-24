@@ -40,13 +40,6 @@ const FEATURES = [
       "Gérez plusieurs voyages simultanément. Organisez vos étapes par jour avec le drag & drop.",
     bg: "bg-emerald-50",
   },
-  {
-    icon: <Shield size={22} className="text-[#854F0B]" />,
-    title: "Sécurisé & privé",
-    description:
-      "Vos données de voyage vous appartiennent. Hébergé en Europe, conforme RGPD.",
-    bg: "bg-amber-50",
-  },
 ];
 
 const STEPS = [
@@ -219,7 +212,7 @@ export default function LandingPage() {
             </div>
 
             <div
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
               role="list"
             >
               {FEATURES.map((feature) => (
